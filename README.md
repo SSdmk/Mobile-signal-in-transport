@@ -28,11 +28,6 @@ Measurements were conducted using a variety of devices to ensure a comprehensive
 
 **Measurement Methodology:** Data was collected under various conditions, testing different device placements (e.g., near windows, on tables, inside bags) to measure signal attenuation caused by the vehicle's body (e.g., metalized windows in modern trains). 
 
-## 🚀 How to Use the Data
-All processed data is provided in standard, open `.csv` format to ensure compatibility with Python (Pandas), R, MATLAB, or standard GIS software. 
-
-For a complete explanation of the variables (like RSRP, RSRQ, SNR, or GNSS coordinates), please read the `data_dictionary.md` located in the `/data` folder.
-
 ## ✍️ Author & Contact
 * **[Tvoje Meno a Priezvisko]** - *Bachelor student* - [Odkaz na tvoj LinkedIn alebo e-mail]
 * **Supervisor:** [Meno a titul tvojho školiteľa]
