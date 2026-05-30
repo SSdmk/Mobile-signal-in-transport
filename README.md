@@ -1,182 +1,106 @@
-% README.tex
-% Určené pre GitHub repozitár – kompilovať pomocou pdflatex alebo lualatex
+# Mobile Network Signal Measurement (4G) / Meranie mobilného signálu (4G)
 
-\documentclass[12pt, a4paper]{article}
+> Slovenská verzia sa nachádza nižšie / Slovak version is below
 
-% --- Packages ---
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english, slovak]{babel}   % posledný jazyk = hlavný
-\usepackage{geometry}
-\usepackage{hyperref}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{parskip}
-\usepackage{titlesec}
-\usepackage{xcolor}
+---
 
-\geometry{margin=2.5cm}
+## English Version
 
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    pdfauthor={Samuel},
-    pdftitle={Mobile Network Signal Measurement (4G)},
-}
+### Overview
 
-% --- Title ---
-\title{\textbf{Mobile Network Signal Measurement (4G)}\\[0.4em]
-       \large Meranie mobilného signálu (4G)}
-\author{}
-\date{}
+This repository contains the dataset and interactive map visualizations from a bachelor's thesis focused on analyzing the coverage and quality of mobile networks (4G LTE). The primary focus of this research is measuring signal attenuation (penetration loss) caused by the physical construction of various public transport vehicles (trains, trams) and evaluating the impact of measurement equipment placement on GNSS accuracy and Radio Frequency (RF) metrics.
 
-% ============================================================
-\begin{document}
-\maketitle
-\tableofcontents
-\newpage
+---
 
-% ============================================================
-\section*{English Version}
-\addcontentsline{toc}{section}{English Version}
+### Measured Routes & Scenarios
 
-% ---- Overview -----------------------------------------------
-\subsection*{Overview}
-\addcontentsline{toc}{subsection}{Overview}
+The data logs cover over **900 kilometres** of railway and road corridors, including:
 
-This repository contains the dataset and interactive map visualizations from a bachelor's thesis
-focused on analyzing the coverage and quality of mobile networks (4G~LTE).
-The primary focus of this research is measuring signal attenuation (penetration loss) caused by
-the physical construction of various public transport vehicles (trains, trams) and evaluating the
-impact of measurement equipment placement on GNSS accuracy and Radio Frequency (RF) metrics.
+- **Railway Corridors (CZ):** Prague – Cheb, Prague – České Budějovice, Prague – Děčín
+- **Road/Highway Corridors (CZ/SK):** Brno – Žilina (and return trips)
+- **Urban Public Transport:** Tram lines in the city of Brno (e.g. historical centre to Technology Park)
+- **Specific Scenarios:** Direct comparisons of signal penetration between older train carriages and modern units (Moravia) equipped with laser-treated metallised windows, as well as testing hardware placement (dashboard vs. glovebox)
 
-% ---- Measured Routes ----------------------------------------
-\subsection*{Measured Routes \& Scenarios}
-\addcontentsline{toc}{subsection}{Measured Routes \& Scenarios}
+---
 
-The data logs cover over \textbf{900~kilometres} of railway and road corridors, including:
+### Data Structure & Log Files
 
-\begin{itemize}[leftmargin=1.5em]
-    \item \textbf{Railway Corridors (CZ):} Prague~-- Cheb, Prague~-- České Budějovice,
-          Prague~-- Děčín.
-    \item \textbf{Road/Highway Corridors (CZ/SK):} Brno~-- Žilina (and return trips).
-    \item \textbf{Urban Public Transport:} Tram lines in the city of Brno
-          (e.g.\ historical centre to Technology Park).
-    \item \textbf{Specific Scenarios:} Direct comparisons of signal penetration between
-          older train carriages and modern units (Moravia) equipped with laser-treated
-          metallised windows, as well as testing hardware placement
-          (dashboard vs.\ glovebox).
-\end{itemize}
+The raw data is provided in `TXT/CSV` format, collected using the **G-NetTrack Pro** diagnostic application.
 
-% ---- Data Structure -----------------------------------------
-\subsection*{Data Structure \& Log Files}
-\addcontentsline{toc}{subsection}{Data Structure \& Log Files}
+#### Glossary of Log File Abbreviations
 
-The raw data is provided in \texttt{TXT/CSV} format, collected using the
-\textbf{G-NetTrack Pro} diagnostic application.
+| Field | Description |
+|---|---|
+| `Timestamp` | Date and exact time of the logged measurement |
+| `Longitude / Latitude` | GNSS spatial coordinates |
+| `Speed` | Speed of the device/vehicle (km/h) |
+| `Network Tech / NetworkMode` | The active radio technology (e.g. 4G) |
+| `Node / CellID / LAC` | Identifiers for the connected cell tower and location area |
+| `NodeLevel (RSRP)` | Reference Signal Received Power (dBm) — primary indicator of signal strength |
+| `Qual (RSRQ)` | Reference Signal Received Quality (dB) |
+| `SNR (SINR)` | Signal-to-Interference-plus-Noise Ratio (dB) — critical parameter for data throughput and connection quality |
+| `LTERSSI` | Total received signal strength indicator, including noise and interference |
+| `Accuracy` | GNSS localisation accuracy (metres) |
+| `Altitude / Height` | Elevation data |
 
-\subsubsection*{Glossary of Log File Abbreviations}
+---
 
-\begin{description}[leftmargin=2em, labelindent=0em]
-    \item[\texttt{Timestamp}] Date and exact time of the logged measurement.
-    \item[\texttt{Longitude / Latitude}] GNSS spatial coordinates.
-    \item[\texttt{Speed}] Speed of the device/vehicle (km/h).
-    \item[\texttt{Network Tech / NetworkMode}] The active radio technology (e.g.\ 4G).
-    \item[\texttt{Node / CellID / LAC}] Identifiers for the connected cell tower and location area.
-    \item[\texttt{NodeLevel (RSRP)}] Reference Signal Received Power (in dBm).
-          The primary indicator of signal strength.
-    \item[\texttt{Qual (RSRQ)}] Reference Signal Received Quality (in dB).
-    \item[\texttt{SNR (SINR)}] Signal-to-Interference-plus-Noise Ratio (in dB).
-          A critical parameter for data throughput and connection quality.
-    \item[\texttt{LTERSSI}] Total received signal strength indicator,
-          including noise and interference.
-    \item[\texttt{Accuracy}] GNSS localisation accuracy (in metres).
-    \item[\texttt{Altitude / Height}] Elevation data.
-\end{description}
+### MATLAB Visualisations
 
-% ---- MATLAB -------------------------------------------------
-\subsection*{MATLAB Visualisations}
-\addcontentsline{toc}{subsection}{MATLAB Visualisations}
+In addition to raw logs, this repository includes MATLAB files used for data post-processing and spatial visualisation.
 
-In addition to raw logs, this repository includes MATLAB files used for data post-processing
-and spatial visualisation. You can download these files, run them in your local MATLAB
-environment, and interact with the maps (zoom in on specific streets, pan across the railway
-corridors, and inspect the precise handover points and signal drops).
+> **Requirements:** To open the `.fig` map files and run the provided `.m` scripts, you must have **MATLAB** installed on your computer.
 
-% ============================================================
-\newpage
-\begin{otherlanguage}{slovak}
+Once downloaded and opened in MATLAB, you can fully interact with the figures — zoom in on specific streets, pan across the railway corridors, and inspect the precise handover points and signal drops. If you do not have MATLAB, you can still use the raw CSV/TXT logs to create your own visualizations in open-source GIS software like **QGIS** or **Google Earth**.
 
-\section*{Slovenská verzia}
-\addcontentsline{toc}{section}{Slovenská verzia}
+---
+---
 
-% ---- O projekte ---------------------------------------------
-\subsection*{O projekte}
-\addcontentsline{toc}{subsection}{O projekte}
+## Slovenská verzia
 
-Tento repozitár obsahuje namerané dáta a interaktívne mapové vizualizácie z bakalárskej práce
-zameranej na analýzu pokrytia a kvality mobilných sietí (4G~LTE).
-Hlavným cieľom tohto výskumu je meranie útlmu signálu spôsobeného fyzickou konštrukciou
-rôznych prostriedkov hromadnej dopravy (vlaky, električky) a vyhodnotenie vplyvu umiestnenia
-meracej aparatúry na presnosť GNSS a rádiové (RF) parametre.
+### O projekte
 
-% ---- Merané trasy -------------------------------------------
-\subsection*{Merané trasy a scenáre}
-\addcontentsline{toc}{subsection}{Merané trasy a scenáre}
+Tento repozitár obsahuje namerané dáta a interaktívne mapové vizualizácie z bakalárskej práce zameranej na analýzu pokrytia a kvality mobilných sietí (4G LTE). Hlavným cieľom je meranie útlmu signálu spôsobeného fyzickou konštrukciou rôznych prostriedkov hromadnej dopravy (vlaky, električky) a vyhodnotenie vplyvu umiestnenia meracej aparatúry na presnosť GNSS a rádiové (RF) parametre.
 
-Dátové logy pokrývajú viac ako \textbf{900~kilometrov} železničných a cestných koridorov,
-vrátane:
+---
 
-\begin{itemize}[leftmargin=1.5em]
-    \item \textbf{Železničné koridory (ČR):} Praha~-- Cheb, Praha~-- České Budějovice,
-          Praha~-- Děčín.
-    \item \textbf{Cestné koridory (ČR/SR):} Brno~-- Žilina (a spiatočné jazdy).
-    \item \textbf{Mestská hromadná doprava:} Električkové trate v Brne
-          (napr.\ z historického centra do Technologického parku).
-    \item \textbf{Špecifické scenáre:} Priame porovnania priestupnosti signálu medzi
-          staršími vagónmi a modernými jednotkami (Moravia) s pokovovanými oknami,
-          ako aj testovanie umiestnenia hardvéru v aute
-          (palubná doska vs.\ odkladacia priehradka).
-\end{itemize}
+### Merané trasy a scenáre
 
-% ---- Štruktúra dát ------------------------------------------
-\subsection*{Štruktúra dát a log súbory}
-\addcontentsline{toc}{subsection}{Štruktúra dát a log súbory}
+Dátové logy pokrývajú viac ako **900 kilometrov** železničných a cestných koridorov, vrátane:
 
-Surové dáta sú poskytované vo formáte \texttt{TXT/CSV} a boli zbierané pomocou
-diagnostickej aplikácie \textbf{G-NetTrack Pro}.
+- **Železničné koridory (ČR):** Praha – Cheb, Praha – České Budějovice, Praha – Děčín
+- **Cestné koridory (ČR/SR):** Brno – Žilina (a spiatočné jazdy)
+- **Mestská hromadná doprava:** Električkové trate v Brne (napr. z historického centra do Technologického parku)
+- **Špecifické scenáre:** Priame porovnania priestupnosti signálu medzi staršími vagónmi a modernými jednotkami (Moravia) s pokovovanými oknami, ako aj testovanie umiestnenia hardvéru v aute (palubná doska vs. odkladacia priehradka)
 
-\subsubsection*{Vysvetlivky skratiek v log súboroch}
+---
 
-\begin{description}[leftmargin=2em, labelindent=0em]
-    \item[\texttt{Timestamp}] Dátum a presný čas zaznamenania hodnoty.
-    \item[\texttt{Longitude / Latitude}] Priestorové GNSS súradnice
-          (zemepisná dĺžka a šírka).
-    \item[\texttt{Speed}] Rýchlosť pohybu zariadenia/vozidla (km/h).
-    \item[\texttt{Network Tech / NetworkMode}] Aktuálne využívaná rádiová technológia
-          (napr.\ 4G).
-    \item[\texttt{Node / CellID / LAC}] Identifikátory pripojenej základňovej stanice
-          a lokality.
-    \item[\texttt{NodeLevel (RSRP)}] Sila prijatého referenčného signálu (v~dBm).
-    \item[\texttt{Qual (RSRQ)}] Kvalita prijatého referenčného signálu (v~dB).
-    \item[\texttt{SNR (SINR)}] Odstup užitočného signálu od šumu a interferencií (v~dB).
-          Kritický QoS parameter.
-    \item[\texttt{LTERSSI}] Celková úroveň prijatého signálu vrátane šumu a rušenia
-          z~okolia.
-    \item[\texttt{Accuracy}] Presnosť priestorovej lokalizácie GNSS (v~metroch).
-    \item[\texttt{Altitude / Height}] Údaje o~nadmorskej výške.
-\end{description}
+### Štruktúra dát a log súbory
 
-% ---- MATLAB -------------------------------------------------
-\subsection*{MATLAB vizualizácie}
-\addcontentsline{toc}{subsection}{MATLAB vizualizácie}
+Surové dáta sú poskytované vo formáte `TXT/CSV` a boli zbierané pomocou aplikácie **G-NetTrack Pro**.
 
-Okrem surových logov tento repozitár obsahuje aj MATLAB súbory využité na post-processing
-a priestorovú vizualizáciu dát. Tieto súbory si môžete stiahnuť, otvoriť vo svojom lokálnom
-prostredí MATLAB a s mapami priamo interagovať (približovať konkrétne ulice, posúvať sa po
-trati a detailne skúmať body handoveru či výpadky signálu).
+#### Vysvetlivky skratiek v log súboroch
 
-\end{otherlanguage}
+| Pole | Popis |
+|---|---|
+| `Timestamp` | Dátum a presný čas zaznamenania hodnoty |
+| `Longitude / Latitude` | Priestorové GNSS súradnice (zemepisná dĺžka a šírka) |
+| `Speed` | Rýchlosť pohybu zariadenia/vozidla (km/h) |
+| `Network Tech / NetworkMode` | Aktuálne využívaná rádiová technológia (napr. 4G) |
+| `Node / CellID / LAC` | Identifikátory pripojenej základňovej stanice a lokality |
+| `NodeLevel (RSRP)` | Sila prijatého referenčného signálu (dBm) |
+| `Qual (RSRQ)` | Kvalita prijatého referenčného signálu (dB) |
+| `SNR (SINR)` | Odstup užitočného signálu od šumu a interferencií (dB) — kritický QoS parameter |
+| `LTERSSI` | Celková úroveň prijatého signálu vrátane šumu a rušenia z okolia |
+| `Accuracy` | Presnosť priestorovej lokalizácie GNSS (metre) |
+| `Altitude / Height` | Údaje o nadmorskej výške |
 
-\end{document}
+---
+
+### MATLAB vizualizácie
+
+Okrem surových logov tento repozitár obsahuje aj MATLAB súbory využité na post-processing a priestorovú vizualizáciu dát.
+
+> **Požiadavky:** Na otvorenie súborov `.fig` a spustenie priložených skriptov `.m` je potrebné mať nainštalovaný **MATLAB**.
+
+Po stiahnutí a otvorení v prostredí MATLAB môžete s mapami plne interagovať — približovať konkrétne ulice, posúvať sa po trati a detailne skúmať body handoveru či výpadky signálu. Ak MATLAB nemáte k dispozícii, surové logy vo formáte CSV/TXT je možné vizualizovať aj v open-source GIS softvéri, napríklad v **QGIS** alebo **Google Earth**.
